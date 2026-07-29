@@ -246,6 +246,7 @@
   .form-field label{
     font-size:13px; font-weight:600; color:#D7DDED;
   }
+  .label-note{ font-size:12px; font-weight:500; color:#9EABC8; margin-left:6px; }
   .cta-form input,
   .cta-form textarea{
     padding:14px 16px; border-radius:12px; border:1px solid #34405C; background:#1D2A47; color:#fff; font-size:14px; width:100%;
@@ -539,11 +540,11 @@
       </div>
       <form class="cta-form" onsubmit="event.preventDefault(); alert('상담 신청이 접수되었습니다. (데모 폼입니다)');">
         <div class="form-field">
-          <label for="studentName">1. 자녀분 이름</label>
+          <label for="studentName">1. 자녀분 이름 <span class="label-note">(성인일경우 본인 작성)</span></label>
           <input id="studentName" type="text" placeholder="자녀분 성함을 입력해 주세요" required>
         </div>
         <div class="form-field">
-          <label for="parentPhone">2. 학부모님 연락처</label>
+          <label for="parentPhone">2. 학부모님 연락처 <span class="label-note">(성인일경우 본인 작성)</span></label>
           <input id="parentPhone" type="tel" placeholder="예: 010-1234-5678" required>
         </div>
         <div class="form-field full">
