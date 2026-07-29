@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>파워잉글리쉬 | 1:1 화상 회화 - 영어·중국어·일본어</title>
+<meta name="description" content="1:1 맞춤 화상 회화 전문, 파워잉글리쉬. 영어·중국어·일본어를 원어민·전문 강사와 함께 실력 있게.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F5F4EF;
+    --bg-deep:#EFEDE5;
+    --ink:#16213B;
+    --ink-soft:#525B72;
+    --coral:#FF6A4D;
+    --coral-deep:#E6512F;
+    --gold:#C99A3C;
+    --card:#FFFFFF;
+    --line:#E1DED2;
+    --en:#FF6A4D;
+    --cn:#C9463C;
+    --jp:#2E5C6E;
+    --radius:18px;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans KR', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.serif{
+    font-family:'Noto Serif KR','Fraunces',serif;
+    font-weight:900;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  .en-display{ font-family:'Fraunces', serif; font-style:italic; }
+  p{ line-height:1.7; color:var(--ink-soft); margin:0; }
+  a{ text-decoration:none; color:inherit; }
+  img{ max-width:100%; display:block; }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 28px; }
+  section{ position:relative; }
+
+  /* reveal on scroll */
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .8s ease, transform .8s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* ---------- Header ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(245,244,239,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid transparent;
+    transition:border-color .3s ease, box-shadow .3s ease;
+  }
+  header.scrolled{ border-color:var(--line); box-shadow:0 4px 24px rgba(22,33,59,0.05); }
+  .nav{ display:flex; align-items:center; justify-content:space-between; height:76px; }
+  .logo{ display:flex; align-items:center; gap:9px; font-family:'Fraunces',serif; font-weight:700; font-size:21px; }
+  .logo .dot{ width:9px; height:9px; border-radius:50%; background:var(--coral); }
+  .navlinks{ display:flex; gap:34px; font-size:14.5px; font-weight:500; color:var(--ink-soft); }
+  .navlinks a{ position:relative; padding:6px 0; }
+  .navlinks a::after{ content:''; position:absolute; left:0; bottom:0; width:0; height:1.5px; background:var(--coral); transition:width .25s ease; }
+  .navlinks a:hover{ color:var(--ink); }
+  .navlinks a:hover::after{ width:100%; }
+  .nav-cta{
+    background:var(--ink); color:#fff; padding:11px 22px; border-radius:30px;
+    font-size:13.5px; font-weight:600; white-space:nowrap;
+  }
+  .nav-cta:hover{ background:var(--coral-deep); }
+  .burger{ display:none; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:168px 0 120px;
+    background:
+      radial-gradient(680px 420px at 84% 8%, rgba(255,106,77,0.14), transparent 60%),
+      radial-gradient(520px 360px at 4% 92%, rgba(46,92,110,0.10), transparent 60%);
+  }
+  .hero-grid{ display:grid; grid-template-columns:1.05fr 0.95fr; gap:56px; align-items:center; }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:12.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--coral-deep); margin-bottom:20px;
+  }
+  .eyebrow::before{ content:''; width:22px; height:1.5px; background:var(--coral-deep); }
+  .hero h1{
+    font-size:clamp(34px,4.6vw,56px); line-height:1.22; color:var(--ink);
+  }
+  .hero h1 em{ font-style:normal; color:var(--coral-deep); }
+  .hero p.lead{
+    margin-top:22px; font-size:17px; max-width:480px;
+  }
+  .hero-cta{ display:flex; gap:12px; margin-top:34px; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:15px 26px; border-radius:30px; font-size:14.5px; font-weight:700;
+    transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .btn-primary{ background:var(--coral); color:#fff; box-shadow:0 10px 26px rgba(255,106,77,0.32); }
+  .btn-primary:hover{ transform:translateY(-2px); background:var(--coral-deep); }
+  .btn-ghost{ background:transparent; color:var(--ink); border:1.5px solid var(--line); }
+  .btn-ghost:hover{ border-color:var(--ink); }
+  .hero-meta{ display:flex; gap:28px; margin-top:44px; }
+  .hero-meta div{ font-size:13px; color:var(--ink-soft); }
+  .hero-meta strong{ display:block; font-family:'Fraunces',serif; font-size:26px; color:var(--ink); font-weight:700; }
+
+  /* Signature: stacked conversation bubbles */
+  .bubble-stage{ position:relative; height:460px; }
+  .bubble{
+    position:absolute; background:var(--card); border-radius:20px;
+    padding:18px 20px; box-shadow:0 18px 40px rgba(22,33,59,0.10);
+    width:280px; border:1px solid var(--line);
+    animation:float 6s ease-in-out infinite;
+  }
+  .bubble .tag{
+    display:inline-block; font-size:11px; font-weight:700; padding:3px 9px; border-radius:20px; color:#fff; margin-bottom:9px;
+  }
+  .bubble p.line{ color:var(--ink); font-size:15px; font-weight:500; margin-bottom:4px; }
+  .bubble p.tr{ color:var(--ink-soft); font-size:12.5px; margin:0; }
+  .bubble.en{ top:0; left:8%; border-left:4px solid var(--en); animation-delay:0s; }
+  .bubble.en .tag{ background:var(--en); }
+  .bubble.cn{ top:170px; left:34%; border-left:4px solid var(--cn); animation-delay:.6s; z-index:2; }
+  .bubble.cn .tag{ background:var(--cn); }
+  .bubble.jp{ top:330px; left:4%; border-left:4px solid var(--jp); animation-delay:1.2s; }
+  .bubble.jp .tag{ background:var(--jp); }
+  @keyframes float{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-10px);} }
+
+  /* ---------- Marquee strip ---------- */
+  .strip{
+    background:var(--ink); color:#fff; padding:14px 0; overflow:hidden; white-space:nowrap;
+  }
+  .strip-track{ display:inline-block; animation:marquee 26s linear infinite; font-family:'Fraunces',serif; font-style:italic; font-size:15px; letter-spacing:.02em; }
+  .strip-track span{ margin:0 26px; opacity:.85; }
+  @keyframes marquee{ from{ transform:translateX(0);} to{ transform:translateX(-50%);} }
+
+  /* ---------- Section heading pattern ---------- */
+  .sec-head{ max-width:620px; margin-bottom:52px; }
+  .sec-head .eyebrow{ margin-bottom:14px; }
+  .sec-head h2{ font-size:clamp(26px,3.2vw,38px); line-height:1.3; }
+  .sec-head p{ margin-top:16px; font-size:15.5px; }
+
+  section.pad{ padding:104px 0; }
+  .line-top{ border-top:1px solid var(--line); }
+
+  /* ---------- About / stats ---------- */
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start; }
+  .about-copy p{ font-size:16px; margin-bottom:16px; }
+  .stat-list{ display:grid; grid-template-columns:1fr 1fr; gap:28px 20px; margin-top:36px; }
+  .stat-list .num{ font-family:'Fraunces',serif; font-weight:700; font-size:38px; color:var(--coral-deep); }
+  .stat-list .lbl{ font-size:13px; color:var(--ink-soft); margin-top:4px; }
+  .about-note{ font-size:12px; color:#9AA0AE; margin-top:10px; }
+
+  .lang-badges{ display:flex; flex-direction:column; gap:16px; }
+  .lang-badge{
+    display:flex; align-items:center; gap:16px; background:var(--card);
+    border:1px solid var(--line); border-radius:16px; padding:18px 20px;
+  }
+  .lang-badge .ic{
+    width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-weight:700; font-size:16px; color:#fff; flex-shrink:0;
+  }
+  .lang-badge.en .ic{ background:var(--en); }
+  .lang-badge.cn .ic{ background:var(--cn); }
+  .lang-badge.jp .ic{ background:var(--jp); }
+  .lang-badge h4{ font-family:'Noto Sans KR'; font-weight:700; font-size:15px; margin:0 0 3px; }
+  .lang-badge span{ font-size:13px; color:var(--ink-soft); }
+
+  /* ---------- Why us ---------- */
+  .why-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
+  .why-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:34px 28px; transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .why-card:hover{ transform:translateY(-6px); box-shadow:0 20px 40px rgba(22,33,59,0.09); border-color:transparent; }
+  .why-card .num{ font-family:'Fraunces',serif; font-style:italic; color:var(--coral); font-size:14px; font-weight:700; }
+  .why-card h3{ font-size:19px; margin:14px 0 12px; font-weight:700; font-family:'Noto Sans KR'; }
+  .why-card ul{ margin:0; padding-left:18px; color:var(--ink-soft); font-size:14px; line-height:1.9; }
+
+  /* ---------- Services ---------- */
+  .svc-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .svc-card{
+    border-radius:var(--radius); overflow:hidden; background:var(--card);
+    border:1px solid var(--line); display:flex; flex-direction:column;
+  }
+  .svc-top{ height:132px; display:flex; align-items:flex-end; padding:20px; position:relative; }
+  .svc-top h3{ color:#fff; font-family:'Fraunces',serif; font-weight:700; font-size:24px; position:relative; z-index:1; }
+  .svc-top::after{ content:''; position:absolute; inset:0; background:linear-gradient(135deg, rgba(0,0,0,0.05), rgba(0,0,0,0.28)); }
+  .svc-card.en .svc-top{ background:linear-gradient(135deg,#FF8064,var(--en)); }
+  .svc-card.cn .svc-top{ background:linear-gradient(135deg,#E06056,var(--cn)); }
+  .svc-card.jp .svc-top{ background:linear-gradient(135deg,#3E7C90,var(--jp)); }
+  .svc-body{ padding:24px 22px 26px; flex:1; display:flex; flex-direction:column; }
+  .svc-body p{ font-size:14px; margin-bottom:16px; }
+  .svc-body ul{ list-style:none; margin:0 0 20px; padding:0; font-size:13.5px; color:var(--ink); }
+  .svc-body li{ padding:7px 0; border-top:1px dashed var(--line); }
+  .svc-body li:first-child{ border-top:none; }
+  .svc-more{ margin-top:auto; font-size:13px; font-weight:700; color:var(--coral-deep); display:inline-flex; align-items:center; gap:5px; }
+
+  /* ---------- Courses ---------- */
+  .course-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+  .course-card{
+    background:var(--card); border:1px solid var(--line); border-radius:16px; padding:26px 22px;
+  }
+  .course-card .lv{ font-size:11px; font-weight:700; letter-spacing:.06em; color:var(--gold); text-transform:uppercase; }
+  .course-card h4{ font-family:'Noto Sans KR'; font-weight:700; font-size:17px; margin:10px 0 10px; }
+  .course-card p{ font-size:13.5px; }
+
+  /* ---------- Testimonials ---------- */
+  .tm-track{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .tm-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:28px;
+    display:flex; flex-direction:column; gap:16px;
+  }
+  .tm-card .quote{ font-family:'Fraunces',serif; font-style:italic; color:var(--coral); font-size:34px; line-height:1; }
+  .tm-card p.body{ font-size:14.5px; color:var(--ink); flex:1; }
+  .tm-who{ display:flex; align-items:center; gap:10px; padding-top:10px; border-top:1px solid var(--line); }
+  .tm-who .av{ width:34px; height:34px; border-radius:50%; background:var(--bg-deep); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:var(--ink-soft); }
+  .tm-who div span{ display:block; font-size:12px; color:var(--ink-soft); }
+  .tm-who div strong{ font-size:13.5px; }
+  .tm-note{ font-size:12px; color:#9AA0AE; margin-top:22px; }
+
+  /* ---------- CTA band ---------- */
+  .cta-band{
+    background:var(--ink); border-radius:28px; padding:64px 56px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between; gap:40px; flex-wrap:wrap;
+  }
+  .cta-band h2{ color:#fff; font-size:clamp(24px,3vw,32px); max-width:480px; line-height:1.35; }
+  .cta-band p{ color:#B9C0D0; margin-top:10px; font-size:14.5px; }
+  .cta-form{ display:flex; gap:10px; flex-wrap:wrap; }
+  .cta-form input{
+    padding:14px 16px; border-radius:12px; border:1px solid #34405C; background:#1D2A47; color:#fff; font-size:14px; min-width:150px;
+  }
+  .cta-form input::placeholder{ color:#7C87A0; }
+  .cta-form button{
+    background:var(--coral); color:#fff; border:none; padding:14px 24px; border-radius:12px; font-weight:700; font-size:14px; cursor:pointer;
+    transition:background .2s ease;
+  }
+  .cta-form button:hover{ background:var(--coral-deep); }
+
+  /* ---------- Footer ---------- */
+  footer{ padding:70px 0 40px; }
+  .foot-grid{ display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:40px; padding-bottom:44px; border-bottom:1px solid var(--line); }
+  .foot-logo{ font-family:'Fraunces',serif; font-weight:700; font-size:20px; margin-bottom:14px; }
+  .foot-grid p{ font-size:13.5px; }
+  .foot-col h5{ font-size:13px; font-weight:700; color:var(--ink); margin-bottom:14px; text-transform:uppercase; letter-spacing:.06em; }
+  .foot-col p, .foot-col a{ font-size:13.5px; color:var(--ink-soft); display:block; margin-bottom:9px; }
+  .foot-bottom{ display:flex; justify-content:space-between; padding-top:24px; font-size:12px; color:#9AA0AE; flex-wrap:wrap; gap:10px; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:960px){
+    .navlinks{ display:none; }
+    .hero-grid{ grid-template-columns:1fr; }
+    .bubble-stage{ height:380px; margin-top:20px; }
+    .about-grid{ grid-template-columns:1fr; }
+    .why-grid, .svc-grid{ grid-template-columns:1fr 1fr; }
+    .course-grid{ grid-template-columns:1fr 1fr; }
+    .tm-track{ grid-template-columns:1fr; }
+    .foot-grid{ grid-template-columns:1fr; gap:26px; }
+    .cta-band{ padding:44px 28px; }
+  }
+  @media (max-width:600px){
+    .why-grid, .svc-grid, .course-grid{ grid-template-columns:1fr; }
+    .hero{ padding:150px 0 80px; }
+    .bubble{ width:88%; position:relative; margin-bottom:14px; }
+    .bubble.en,.bubble.cn,.bubble.jp{ position:relative; top:auto; left:auto; }
+    .bubble-stage{ height:auto; }
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="wrap nav">
+    <div class="logo"><span class="dot"></span>파워잉글리쉬</div>
+    <nav class="navlinks">
+      <a href="#about">소개</a>
+      <a href="#why">왜 파워잉글리쉬</a>
+      <a href="#services">언어별 안내</a>
+      <a href="#courses">코스</a>
+      <a href="#reviews">수강 후기</a>
+    </nav>
+    <a class="nav-cta" href="#apply">무료 레벨테스트</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="reveal in">
+      <div class="eyebrow">1:1 화상 회화 · EN · CN · JP</div>
+      <h1>말이 트이는 순간,<br>그 언어는 <em>내 것</em>이 됩니다</h1>
+      <p class="lead">영어, 중국어, 일본어 — 배우고 싶은 언어를 검증된 전담 강사와 1:1로. 레벨과 목적에 맞춰 설계하는 파워잉글리쉬의 회화 수업입니다.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#apply">무료 레벨테스트 신청 →</a>
+        <a class="btn btn-ghost" href="#courses">코스 둘러보기</a>
+      </div>
+      <div class="hero-meta">
+        <div><strong>3</strong>개 언어 트랙</div>
+        <div><strong>1:1</strong> 전담 강사 매칭</div>
+        <div><strong>주7일</strong> 원하는 시간에</div>
+      </div>
+    </div>
+    <div class="bubble-stage reveal in">
+      <div class="bubble en">
+        <span class="tag">ENGLISH</span>
+        <p class="line">"Could you say that one more time?"</p>
+        <p class="tr">다시 한 번 말씀해 주시겠어요?</p>
+      </div>
+      <div class="bubble cn">
+        <span class="tag">中文</span>
+        <p class="line">"我今天想练习一下点餐。"</p>
+        <p class="tr">오늘은 주문하는 표현을 연습하고 싶어요.</p>
+      </div>
+      <div class="bubble jp">
+        <span class="tag">日本語</span>
+        <p class="line">「少しずつ自信がついてきました。」</p>
+        <p class="tr">조금씩 자신감이 붙고 있어요.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="strip-track">
+    <span>Speak First, Grammar Later</span><span>영어 회화</span><span>中文口语</span><span>日本語会話</span>
+    <span>Speak First, Grammar Later</span><span>영어 회화</span><span>中文口语</span><span>日本語会話</span>
+  </div>
+</div>
+
+<section class="pad" id="about">
+  <div class="wrap about-grid">
+    <div class="about-copy reveal">
+      <div class="eyebrow">About Power English</div>
+      <h2 style="font-size:clamp(24px,3vw,32px); margin-bottom:20px;">교재가 아니라<br>대화로 배우는 언어</h2>
+      <p>파워잉글리쉬는 영어·중국어·일본어 1:1 화상 회화에 집중하는 어학 프로그램입니다. 정해진 커리큘럼을 그대로 따라가기보다, 학습자의 목적과 현재 실력에 맞춰 매 수업을 함께 설계합니다.</p>
+      <p>초급자의 첫 한마디부터 비즈니스·시험 대비 심화 회화까지 — 강사와의 꾸준한 1:1 대화 속에서 실력이 자연스럽게 쌓이도록 돕습니다.</p>
+      <div class="stat-list">
+        <div><div class="num">3</div><div class="lbl">지원 언어 (영어·중국어·일본어)</div></div>
+        <div><div class="num">1:1</div><div class="lbl">전담 강사 매칭 방식</div></div>
+        <div><div class="num">7</div><div class="lbl">주 7일, 원하는 시간에 예약</div></div>
+        <div><div class="num">4</div><div class="lbl">레벨별 코스 트랙 운영</div></div>
+      </div>
+      <div class="about-note">* 위 수치는 프로그램 운영 방식을 안내하기 위한 예시이며, 정식 오픈 후 실제 데이터로 교체 예정입니다.</div>
+    </div>
+    <div class="lang-badges reveal">
+      <div class="lang-badge en">
+        <div class="ic">EN</div>
+        <div><h4>Power English</h4><span>일상 회화부터 비즈니스·시험 대비까지</span></div>
+      </div>
+      <div class="lang-badge cn">
+        <div class="ic">中</div>
+        <div><h4>Power Chinese</h4><span>발음·성조 교정부터 실전 대화까지</span></div>
+      </div>
+      <div class="lang-badge jp">
+        <div class="ic">日</div>
+        <div><h4>Power Japanese</h4><span>여행·취미부터 JLPT 대비까지</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pad line-top" id="why">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Why Power English</div>
+      <h2>왜 많은 학습자가<br>파워잉글리쉬를 선택할까요</h2>
+      <p>커리큘럼을 학습자에게 맞추는 것부터 시작합니다. 세 가지 원칙으로 운영합니다.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="num en-display">01</div>
+        <h3>맞춤 1:1 커리큘럼</h3>
+        <ul>
+          <li>레벨테스트로 현재 실력 진단</li>
+          <li>목적(여행·업무·시험)에 맞춘 설계</li>
+          <li>매 수업 후 개별 피드백 제공</li>
+        </ul>
+      </div>
+      <div class="why-card reveal">
+        <div class="num en-display">02</div>
+        <h3>검증된 전담 강사진</h3>
+        <ul>
+          <li>언어별 전문 강사 매칭</li>
+          <li>고정 강사와 꾸준한 학습 흐름</li>
+          <li>발음·표현 교정 중심 지도</li>
+        </ul>
+      </div>
+      <div class="why-card reveal">
+        <div class="num en-display">03</div>
+        <h3>유연한 수업 운영</h3>
+        <ul>
+          <li>주 7일, 원하는 시간대 예약</li>
+          <li>PC·모바일 어디서나 화상 수업</li>
+          <li>수업 녹화·복습 자료 지원</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pad line-top" id="services">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Our Languages</div>
+      <h2>영어, 중국어, 일본어<br>필요한 언어를 선택하세요</h2>
+      <p>세 언어 모두 같은 방식 — 1:1 맞춤 진단과 전담 강사 매칭으로 시작합니다.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-card en reveal">
+        <div class="svc-top"><h3>English</h3></div>
+        <div class="svc-body">
+          <p>일상 회화부터 비즈니스, 오픽·토익스피킹 대비까지 목적별 트랙으로 학습합니다.</p>
+          <ul>
+            <li>왕초보 · 일상 회화</li>
+            <li>비즈니스 · 실무 영어</li>
+            <li>오픽 · 토익스피킹 대비</li>
+          </ul>
+          <span class="svc-more">자세히 보기 →</span>
+        </div>
+      </div>
+      <div class="svc-card cn reveal">
+        <div class="svc-top"><h3>中文</h3></div>
+        <div class="svc-body">
+          <p>발음과 성조 교정부터 시작해 실생활 대화, HSK 대비까지 단계적으로 학습합니다.</p>
+          <ul>
+            <li>발음 · 성조 기초반</li>
+            <li>생활 회화 · 여행 중국어</li>
+            <li>HSK 시험 대비</li>
+          </ul>
+          <span class="svc-more">자세히 보기 →</span>
+        </div>
+      </div>
+      <div class="svc-card jp reveal">
+        <div class="svc-top"><h3>日本語</h3></div>
+        <div class="svc-body">
+          <p>여행·취미 회화부터 시작해 자연스러운 일상 표현, JLPT 대비까지 다룹니다.</p>
+          <ul>
+            <li>여행 · 취미 회화</li>
+            <li>일상 · 비즈니스 회화</li>
+            <li>JLPT 시험 대비</li>
+          </ul>
+          <span class="svc-more">자세히 보기 →</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pad line-top" id="courses">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Best Courses</div>
+      <h2>레벨에 맞는 코스를<br>가볍게 시작하세요</h2>
+    </div>
+    <div class="course-grid">
+      <div class="course-card reveal">
+        <div class="lv">Beginner</div>
+        <h4>왕초보 회화</h4>
+        <p>알파벳·기초 문장부터 차근차근, 말문이 트이는 것을 목표로 합니다.</p>
+      </div>
+      <div class="course-card reveal">
+        <div class="lv">Daily</div>
+        <h4>일상 · 여행 회화</h4>
+        <p>여행, 쇼핑, 일상 대화 등 실생활 상황 중심의 표현을 익힙니다.</p>
+      </div>
+      <div class="course-card reveal">
+        <div class="lv">Business</div>
+        <h4>비즈니스 회화</h4>
+        <p>이메일, 미팅, 전화 응대 등 업무 현장에서 바로 쓰는 표현을 연습합니다.</p>
+      </div>
+      <div class="course-card reveal">
+        <div class="lv">Exam</div>
+        <h4>시험 대비</h4>
+        <p>오픽·토익스피킹, HSK, JLPT 등 목표 시험에 맞춘 집중 대비반입니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pad line-top" id="reviews">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Voices</div>
+      <h2>수강생들이<br>전하는 이야기</h2>
+    </div>
+    <div class="tm-track">
+      <div class="tm-card reveal">
+        <div class="quote">"</div>
+        <p class="body">1:1로 진행하니 제 눈높이에 맞는 표현을 배울 수 있었어요. 부담 없이 대화하다 보니 어느새 자신감이 붙었습니다.</p>
+        <div class="tm-who"><div class="av">A</div><div><strong>수강생 A</strong><span>일상 회화반</span></div></div>
+      </div>
+      <div class="tm-card reveal">
+        <div class="quote">"</div>
+        <p class="body">시간을 자유롭게 예약할 수 있어서 회사 일정에 맞춰 꾸준히 다닐 수 있었어요. 비즈니스 표현 위주로 배운 게 실무에 바로 도움이 됐습니다.</p>
+        <div class="tm-who"><div class="av">B</div><div><strong>수강생 B</strong><span>비즈니스 회화반</span></div></div>
+      </div>
+      <div class="tm-card reveal">
+        <div class="quote">"</div>
+        <p class="body">시험 목표에 맞춰 필요한 부분만 콕 집어 봐주셔서 효율적으로 준비할 수 있었어요. 실전처럼 말하는 연습이 특히 좋았습니다.</p>
+        <div class="tm-who"><div class="av">C</div><div><strong>수강생 C</strong><span>시험 대비반</span></div></div>
+      </div>
+    </div>
+    <div class="tm-note">* 위 후기는 서비스 소개를 위한 예시 문구이며, 정식 오픈 후 실제 수강생 후기로 교체될 예정입니다.</div>
+  </div>
+</section>
+
+<section class="pad line-top" id="apply">
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <div>
+        <h2>무료 레벨테스트로<br>지금 시작해보세요</h2>
+        <p>연락처를 남겨주시면 담당 상담사가 확인 후 안내드립니다.</p>
+      </div>
+      <form class="cta-form" onsubmit="event.preventDefault(); alert('상담 신청이 접수되었습니다. (데모 폼입니다)');">
+        <input type="text" placeholder="이름" required>
+        <input type="tel" placeholder="연락처" required>
+        <input type="text" placeholder="관심 언어 (영어/중국어/일본어)">
+        <button type="submit">상담 신청</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-logo">파워잉글리쉬</div>
+        <p>1:1 화상 회화 전문 · 영어 · 중국어 · 일본어<br>목적과 레벨에 맞춘 맞춤 커리큘럼으로 함께합니다.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Menu</h5>
+        <a href="#about">소개</a>
+        <a href="#services">언어별 안내</a>
+        <a href="#courses">코스</a>
+        <a href="#reviews">수강 후기</a>
+      </div>
+      <div class="foot-col">
+        <h5>Contact</h5>
+        <p>대표번호 000-0000-0000</p>
+        <p>평일 09:30 ~ 18:00</p>
+        <p>이메일 info@englishclass.kr</p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 파워잉글리쉬. All Rights Reserved.</span>
+      <span>본 페이지는 초안(데모)이며 사업자 정보·연락처는 확정 후 교체가 필요합니다.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 8);
+  });
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
