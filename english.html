@@ -5,10 +5,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Power English Korea | 파워잉글리쉬</title>
 <meta name="description" content="직장인영어, 여행영어, 성인영어, 영어회화, 제2외국어, 비지니스영어까지 1:1 맞춤 영어 프로그램 Power English Korea">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#f5f4ef">
+<link rel="canonical" href="https://englishclass.kr/english.html">
+<link rel="alternate" hreflang="ko" href="https://englishclass.kr/english.html">
+<link rel="alternate" hreflang="x-default" href="https://englishclass.kr/english.html">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="dns-prefetch" href="//www.plcenter.co.kr">
+<link rel="preconnect" href="https://www.plcenter.co.kr" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="https://www.plcenter.co.kr/img/carousel-1.jpg" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700&family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Power English Korea 1:1 Curriculum",
+  "provider": {
+    "@type": "LanguageSchool",
+    "name": "파워잉글리쉬",
+    "url": "https://englishclass.kr/"
+  },
+  "inLanguage": "en",
+  "educationalLevel": "Beginner to Advanced",
+  "url": "https://englishclass.kr/english.html"
+}
+</script>
 <style>
   :root{
     --bg:#f5f4ef;
@@ -35,6 +58,19 @@
   img{ max-width:100%; display:block; }
   .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 20px; }
   h1,h2,h3{ margin:0; }
+  .skip-link{
+    position:absolute;
+    left:12px;
+    top:-44px;
+    background:#16213b;
+    color:#fff;
+    padding:10px 12px;
+    border-radius:8px;
+    z-index:40;
+    font-size:13px;
+    font-weight:600;
+  }
+  .skip-link:focus{ top:12px; }
 
   header{
     position:absolute;
@@ -52,6 +88,13 @@
   .navlinks{ display:flex; align-items:center; gap:36px; font-size:36px; color:#58627d; font-weight:500; }
   .navlinks a.active{ color:var(--orange-deep); font-weight:700; }
   .consult-btn{ background:var(--orange); color:#fff; border-radius:999px; padding:12px 30px; font-size:32px; font-weight:700; }
+  .consult-btn:focus-visible,
+  .navlinks a:focus-visible,
+  .teacher-nav button:focus-visible,
+  .bottom-cta a:focus-visible{
+    outline:2px solid #e6512f;
+    outline-offset:3px;
+  }
 
   .hero{
     position:relative;
@@ -262,13 +305,22 @@
     .teacher-card .review{ font-size:17px; }
     .bottom-cta a{ font-size:22px; }
   }
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{
+      animation-duration:0.01ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:0.01ms !important;
+      scroll-behavior:auto !important;
+    }
+  }
 </style>
 </head>
 <body>
+<a class="skip-link" href="#mainContent">본문 바로가기</a>
 <header>
   <div class="wrap nav">
     <a class="logo" href="index.html"><span>파워</span>잉글리쉬</a>
-    <nav class="navlinks">
+    <nav class="navlinks" aria-label="주요 메뉴">
       <a href="index.html">파워English</a>
       <a href="index.html#visuals">수업 현장</a>
       <a href="english.html" class="active">파워Contents</a>
@@ -277,6 +329,7 @@
   </div>
 </header>
 
+<main id="mainContent">
 <section class="hero">
   <div class="wrap hero-copy">
     <div class="quote">"난 나만의 영어 트레이너가 있어"</div>
@@ -295,25 +348,25 @@
       <h2>나만을 위해 설계되는<br>맞춤형 학습 프로그램!</h2>
     </div>
     <div class="course-grid">
-      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_01.png" alt="파닉스 과정"><div class="txt"><h3>파닉스 과정</h3><p>영어를 처음 시작하는 학습자를 위한 발음·읽기 기초 과정</p></div></article>
-      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_02.png" alt="초등 회화"><div class="txt"><h3>초등 회화</h3><p>교과 연계와 실전 말하기를 함께 잡는 초등 영어회화 수업</p></div></article>
-      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_03.png" alt="중등 회화"><div class="txt"><h3>중등 회화</h3><p>수행평가와 내신 발표를 대비하는 중등 맞춤 회화 훈련</p></div></article>
-      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_04.png" alt="고등 회화"><div class="txt"><h3>고등 회화</h3><p>심화 어휘와 논리 표현을 강화하는 고등 영어회화 코스</p></div></article>
+      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_01.png" alt="파닉스 과정" loading="lazy" decoding="async"><div class="txt"><h3>파닉스 과정</h3><p>영어를 처음 시작하는 학습자를 위한 발음·읽기 기초 과정</p></div></article>
+      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_02.png" alt="초등 회화" loading="lazy" decoding="async"><div class="txt"><h3>초등 회화</h3><p>교과 연계와 실전 말하기를 함께 잡는 초등 영어회화 수업</p></div></article>
+      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_03.png" alt="중등 회화" loading="lazy" decoding="async"><div class="txt"><h3>중등 회화</h3><p>수행평가와 내신 발표를 대비하는 중등 맞춤 회화 훈련</p></div></article>
+      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_04.png" alt="고등 회화" loading="lazy" decoding="async"><div class="txt"><h3>고등 회화</h3><p>심화 어휘와 논리 표현을 강화하는 고등 영어회화 코스</p></div></article>
 
-      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_05.png" alt="성인 회화"><div class="txt"><h3>성인 회화</h3><p>성인영어 학습자를 위한 실무·일상 통합 영어회화 수업</p></div></article>
-      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_06.png" alt="영어 토론"><div class="txt"><h3>영어 토론</h3><p>이슈 기반 토론으로 사고력과 스피킹 유창성을 동시에 강화</p></div></article>
-      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_07.png" alt="영자신문 과정"><div class="txt"><h3>영자신문 과정</h3><p>영자신문 리딩으로 시사 어휘와 배경지식을 확장하는 코스</p></div></article>
-      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_08.png" alt="비즈니스 회화"><div class="txt"><h3>비즈니스 회화</h3><p>비지니스영어 핵심 표현 중심의 프레젠테이션·미팅 실전 트레이닝</p></div></article>
+      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_05.png" alt="성인 회화" loading="lazy" decoding="async"><div class="txt"><h3>성인 회화</h3><p>성인영어 학습자를 위한 실무·일상 통합 영어회화 수업</p></div></article>
+      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_06.png" alt="영어 토론" loading="lazy" decoding="async"><div class="txt"><h3>영어 토론</h3><p>이슈 기반 토론으로 사고력과 스피킹 유창성을 동시에 강화</p></div></article>
+      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_07.png" alt="영자신문 과정" loading="lazy" decoding="async"><div class="txt"><h3>영자신문 과정</h3><p>영자신문 리딩으로 시사 어휘와 배경지식을 확장하는 코스</p></div></article>
+      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_08.png" alt="비즈니스 회화" loading="lazy" decoding="async"><div class="txt"><h3>비즈니스 회화</h3><p>비지니스영어 핵심 표현 중심의 프레젠테이션·미팅 실전 트레이닝</p></div></article>
 
-      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_09.png" alt="미국교과서 과정"><div class="txt"><h3>미국교과서 과정</h3><p>원서 기반 학습으로 제2외국어 감각까지 넓히는 심화형 과정</p></div></article>
-      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_10.png" alt="영어 문법"><div class="txt"><h3>영어 문법</h3><p>말하기에 바로 적용되는 핵심 문법을 짧고 정확하게 정리</p></div></article>
-      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_11.png" alt="영어 스토리"><div class="txt"><h3>영어 스토리</h3><p>스토리텔링 회화로 표현력·발화량을 동시에 높이는 훈련</p></div></article>
-      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_12.png" alt="인증시험 대비"><div class="txt"><h3>인증시험 대비</h3><p>오픽·토익스피킹 등 인증시험 대비를 위한 유형별 스피킹 코칭</p></div></article>
+      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_09.png" alt="미국교과서 과정" loading="lazy" decoding="async"><div class="txt"><h3>미국교과서 과정</h3><p>원서 기반 학습으로 제2외국어 감각까지 넓히는 심화형 과정</p></div></article>
+      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_10.png" alt="영어 문법" loading="lazy" decoding="async"><div class="txt"><h3>영어 문법</h3><p>말하기에 바로 적용되는 핵심 문법을 짧고 정확하게 정리</p></div></article>
+      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_11.png" alt="영어 스토리" loading="lazy" decoding="async"><div class="txt"><h3>영어 스토리</h3><p>스토리텔링 회화로 표현력·발화량을 동시에 높이는 훈련</p></div></article>
+      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_12.png" alt="인증시험 대비" loading="lazy" decoding="async"><div class="txt"><h3>인증시험 대비</h3><p>오픽·토익스피킹 등 인증시험 대비를 위한 유형별 스피킹 코칭</p></div></article>
 
-      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_13.png" alt="인터뷰 대비"><div class="txt"><h3>인터뷰 대비</h3><p>입시·취업 인터뷰에서 바로 쓰는 답변 구조와 전달력 강화</p></div></article>
-      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_14.png" alt="에세이 수업"><div class="txt"><h3>에세이 수업</h3><p>논리적 글쓰기와 스피치 연계를 함께 훈련하는 에세이 코스</p></div></article>
-      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_15.png" alt="국제학교 대비"><div class="txt"><h3>국제학교 대비</h3><p>국제학교 커리큘럼에 맞춘 과목형 영어로 학업 적응력 향상</p></div></article>
-      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_16.png" alt="SAT 대비"><div class="txt"><h3>SAT 대비</h3><p>미국 대학 진학을 위한 SAT Reading/Writing 전략 집중 코칭</p></div></article>
+      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_13.png" alt="인터뷰 대비" loading="lazy" decoding="async"><div class="txt"><h3>인터뷰 대비</h3><p>입시·취업 인터뷰에서 바로 쓰는 답변 구조와 전달력 강화</p></div></article>
+      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_14.png" alt="에세이 수업" loading="lazy" decoding="async"><div class="txt"><h3>에세이 수업</h3><p>논리적 글쓰기와 스피치 연계를 함께 훈련하는 에세이 코스</p></div></article>
+      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_15.png" alt="국제학교 대비" loading="lazy" decoding="async"><div class="txt"><h3>국제학교 대비</h3><p>국제학교 커리큘럼에 맞춘 과목형 영어로 학업 적응력 향상</p></div></article>
+      <article class="course-card"><img src="https://www.plcenter.co.kr/img/courses_16.png" alt="SAT 대비" loading="lazy" decoding="async"><div class="txt"><h3>SAT 대비</h3><p>미국 대학 진학을 위한 SAT Reading/Writing 전략 집중 코칭</p></div></article>
     </div>
   </div>
 </section>
@@ -350,16 +403,16 @@
     </div>
     <div class="teacher-slider" id="teacherSlider">
       <article class="teacher-card active">
-        <img src="https://www.plcenter.co.kr/img/p_coach14.png" alt="Nicole Kim 프로필">
+        <img src="https://www.plcenter.co.kr/img/p_coach14.png" alt="Nicole Kim 프로필" loading="lazy" decoding="async">
       </article>
       <article class="teacher-card">
-        <img src="https://www.plcenter.co.kr/img/p_coach01.png" alt="Stella 프로필">
+        <img src="https://www.plcenter.co.kr/img/p_coach01.png" alt="Stella 프로필" loading="lazy" decoding="async">
       </article>
       <article class="teacher-card">
-        <img src="https://www.plcenter.co.kr/img/p_coach02.png" alt="Alice Edme Lee 프로필">
+        <img src="https://www.plcenter.co.kr/img/p_coach02.png" alt="Alice Edme Lee 프로필" loading="lazy" decoding="async">
       </article>
       <article class="teacher-card">
-        <img src="https://www.plcenter.co.kr/img/p_coach03.png" alt="Bomi Lee 프로필">
+        <img src="https://www.plcenter.co.kr/img/p_coach03.png" alt="Bomi Lee 프로필" loading="lazy" decoding="async">
       </article>
       <div class="teacher-nav">
         <button type="button" id="teacherPrev" aria-label="이전 강사">‹</button>
@@ -372,6 +425,7 @@
 <section class="bottom-cta">
   <a href="index.html#apply">무료 레벨테스트 신청하기</a>
 </section>
+</main>
 <script>
   (function () {
     const slider = document.getElementById('teacherSlider');

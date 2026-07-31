@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>파워잉글리쉬 | 1:1 화상 회화 - 영어·중국어·일본어</title>
 <meta name="description" content="1:1 맞춤 화상 회화 전문, 파워잉글리쉬. 영어·중국어·일본어를 원어민·전문 강사와 함께 실력 있게.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#F5F4EF">
+<link rel="canonical" href="https://englishclass.kr/">
+<link rel="alternate" hreflang="ko" href="https://englishclass.kr/">
+<link rel="alternate" hreflang="x-default" href="https://englishclass.kr/">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ko_KR">
@@ -19,9 +24,29 @@
 <meta name="twitter:title" content="파워잉글리쉬 | 1:1 화상 회화 - 영어·중국어·일본어">
 <meta name="twitter:description" content="영어·중국어·일본어 1:1 화상 회화. 목적과 레벨에 맞춘 맞춤 커리큘럼으로 말하기 자신감을 키워보세요.">
 <meta name="twitter:image" content="https://englishclass.kr/og-image.png">
+<link rel="dns-prefetch" href="//www.plcenter.co.kr">
+<link rel="preconnect" href="https://www.plcenter.co.kr" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="https://www.plcenter.co.kr/img/carousel-2.jpg" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LanguageSchool",
+  "name": "파워잉글리쉬",
+  "url": "https://englishclass.kr/",
+  "description": "영어·중국어·일본어 1:1 화상 회화 맞춤 수업",
+  "telephone": "+82-10-2928-3614",
+  "inLanguage": [
+    "ko",
+    "en",
+    "zh",
+    "ja"
+  ],
+  "areaServed": "KR"
+}
+</script>
 <style>
   :root{
     --bg:#F5F4EF;
@@ -61,6 +86,19 @@
   img{ max-width:100%; display:block; }
   .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 28px; }
   section{ position:relative; }
+  .skip-link{
+    position:absolute;
+    left:12px;
+    top:-44px;
+    background:var(--ink);
+    color:#fff;
+    padding:10px 12px;
+    border-radius:8px;
+    z-index:120;
+    font-size:13px;
+    font-weight:600;
+  }
+  .skip-link:focus{ top:12px; }
 
   /* reveal on scroll */
   .reveal{ opacity:0; transform:translateY(24px); transition:opacity .8s ease, transform .8s ease; }
@@ -123,6 +161,14 @@
   .btn-contact:hover{ transform:translateY(-2px); background:var(--coral-deep); }
   .btn-ghost{ background:transparent; color:var(--ink); border:1.5px solid var(--line); }
   .btn-ghost:hover{ border-color:var(--ink); }
+  .btn:focus-visible,
+  .navlinks a:focus-visible,
+  .nav-cta:focus-visible,
+  .svc-more:focus-visible,
+  .foot-col a:focus-visible{
+    outline:2px solid var(--coral-deep);
+    outline-offset:2px;
+  }
   .hero-meta{ display:flex; gap:28px; margin-top:44px; }
   .hero-meta div{ font-size:13px; color:var(--ink-soft); }
   .hero-meta strong{ display:block; font-family:'Fraunces',serif; font-size:26px; color:var(--ink); font-weight:700; }
@@ -391,14 +437,24 @@
     .bubble.en,.bubble.cn,.bubble.jp{ position:relative; top:auto; left:auto; }
     .bubble-stage{ height:auto; }
   }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *, *::before, *::after{
+      animation-duration:0.01ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:0.01ms !important;
+    }
+  }
 </style>
 </head>
 <body>
 
+<a class="skip-link" href="#mainContent">본문 바로가기</a>
+
 <header id="siteHeader">
   <div class="wrap nav">
     <div class="logo"><span class="dot"></span>파워잉글리쉬</div>
-    <nav class="navlinks">
+    <nav class="navlinks" aria-label="주요 메뉴">
       <a href="#visuals">수업 현장</a>
       <a href="english.html">English</a>
       <a href="#about">소개</a>
@@ -411,6 +467,7 @@
   </div>
 </header>
 
+<main id="mainContent">
 <section class="hero">
   <div class="wrap hero-grid">
     <div class="reveal in">
@@ -459,7 +516,7 @@
   <div class="wrap">
     <div class="photo-grid reveal">
       <article class="photo-main">
-        <img src="https://www.plcenter.co.kr/img/carousel-2.jpg" alt="1:1 외국어 화상 수업 장면">
+        <img src="https://www.plcenter.co.kr/img/carousel-2.jpg" alt="1:1 외국어 화상 수업 장면" fetchpriority="high" decoding="async">
         <div class="photo-copy">
           <span class="kicker">POWER ENGLISH CLASSROOM</span>
           <h3>오직 나만을 위한<br>DIY 맞춤식 1:1 프리미엄 학습</h3>
@@ -468,11 +525,11 @@
       </article>
       <div class="photo-side">
         <article class="photo-mini">
-          <img src="https://www.plcenter.co.kr/img/about.jpg" alt="중고등 내신 수행평가 연계 수업 이미지">
+          <img src="https://www.plcenter.co.kr/img/about.jpg" alt="중고등 내신 수행평가 연계 수업 이미지" loading="lazy" decoding="async">
           <span>중·고등 내신 수행평가 연계 수업</span>
         </article>
         <article class="photo-mini">
-          <img src="https://www.plcenter.co.kr/img/carousel-1.jpg" alt="비즈니스 영어 회화 수업 분위기 이미지">
+          <img src="https://www.plcenter.co.kr/img/carousel-1.jpg" alt="비즈니스 영어 회화 수업 분위기 이미지" loading="lazy" decoding="async">
           <span>비즈니스 회화부터 실전 인터뷰까지</span>
         </article>
       </div>
@@ -692,6 +749,8 @@
   </div>
 </section>
 
+</main>
+
 <footer>
   <div class="wrap">
     <div class="foot-grid">
@@ -724,10 +783,19 @@
   window.addEventListener('scroll', () => {
     header.classList.toggle('scrolled', window.scrollY > 8);
   });
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, { threshold: 0.15 });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  }
 </script>
 
 </body>
