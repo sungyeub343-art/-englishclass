@@ -205,8 +205,23 @@
     font-size:clamp(34px,4.6vw,56px); line-height:1.22; color:var(--ink);
   }
   .hero h1 em{ font-style:normal; color:var(--coral-deep); }
+  .hero h1 .en-line{
+    display:block;
+    margin-top:10px;
+    font-family:'Fraunces',serif;
+    font-size:clamp(16px,1.8vw,21px);
+    line-height:1.35;
+    color:var(--ink-soft);
+    font-weight:600;
+    letter-spacing:0;
+  }
   .hero p.lead{
     margin-top:22px; font-size:17px; max-width:480px;
+  }
+  .hero p.lead .en-inline,
+  .hero-cta .en-inline{
+    color:var(--ink-soft);
+    font-weight:600;
   }
   .hero-cta{ display:flex; gap:12px; margin-top:34px; flex-wrap:wrap; }
   .btn{
@@ -554,11 +569,11 @@
   <div class="wrap hero-grid">
     <div class="reveal in">
       <div class="eyebrow">1:1 화상 회화 · EN · CN · JP</div>
-      <h1>말이 트이는 순간,<br>그 언어는 <em>내 것</em>이 됩니다</h1>
-      <p class="lead">영어, 중국어, 일본어 — 배우고 싶은 언어를 검증된 전담 강사와 1:1로. 직장인영어, 여행영어, 성인영어, 영어회화, 제2외국어, 비지니스영어 목표까지 레벨과 목적에 맞춰 설계하는 파워잉글리쉬의 회화 수업입니다.</p>
+      <h1>말이 트이는 순간,<br>그 언어는 <em>내 것</em>이 됩니다<span class="en-line">The moment you start speaking, that language becomes yours.</span></h1>
+      <p class="lead">영어, 중국어, 일본어 — 배우고 싶은 언어를 검증된 전담 강사와 1:1로. 직장인영어, 여행영어, 성인영어, 영어회화, 제2외국어, 비지니스영어 목표까지 레벨과 목적에 맞춰 설계하는 파워잉글리쉬의 회화 수업입니다. <span class="en-inline">English, Chinese, or Japanese — learn one-on-one with a verified dedicated instructor. From office English, travel English, and adult learning to conversation, second-language fluency, and business goals, Power English designs each course around your level and purpose.</span></p>
       <div class="hero-cta">
-        <a class="btn btn-primary" href="#apply">무료 레벨테스트 신청 →</a>
-        <a class="btn btn-ghost" href="#courses">코스 둘러보기</a>
+        <a class="btn btn-primary" href="#apply">무료 레벨테스트 신청 <span class="en-inline">(Apply for Free Level Test)</span> →</a>
+        <button class="btn btn-ghost" type="button">sungyeub343@gmail.com</button>
       </div>
       <div class="hero-meta">
         <div><strong>3</strong>개 언어 트랙</div>
@@ -842,16 +857,20 @@
           <input id="parentPhone" name="guardian_phone" type="tel" placeholder="예: 010-1234-5678 (e.g., 010-1234-5678)" required>
         </div>
         <div class="form-field full">
-          <label for="homeAddress">3. 자택 주소 (동/호수까지 입력) (Home Address incl. Building/Unit)</label>
+          <label for="studentEmail">3. 본인 이메일 (Your Email)</label>
+          <input id="studentEmail" name="student_email" type="email" placeholder="예: example@email.com (e.g., yourname@email.com)" required>
+        </div>
+        <div class="form-field full">
+          <label for="homeAddress">4. 자택 주소 (동/호수까지 입력) (Home Address incl. Building/Unit)</label>
           <input id="homeAddress" name="home_address" type="text" placeholder="예: 서울시 강남구 OO로 00, OO아파트 101동 1203호 (e.g., 101-1203, OO Apt, OO-ro, Gangnam-gu, Seoul)" required>
         </div>
         <div class="form-field full">
-          <label for="classTime">4. 수업 가능한 요일 시간대 (Available Days & Time Slots)</label>
+          <label for="classTime">5. 수업 가능한 요일 시간대 (Available Days & Time Slots)</label>
           <input id="classTime" name="available_schedule" type="text" placeholder="예: 월 오후 6시 ~ 오후 10시 이전까지 (e.g., Mon 6:00 PM - before 10:00 PM)" required>
           <div class="field-help">ex) 월 오후6시 ~ 오후10시 이전까지 (e.g., Mon 6:00 PM - before 10:00 PM)</div>
         </div>
         <div class="form-field full">
-          <label for="classStyle">5. 희망하는 선생님 수업 스타일 및 방향성 (Preferred Teaching Style & Direction)</label>
+          <label for="classStyle">6. 희망하는 선생님 수업 스타일 및 방향성 (Preferred Teaching Style & Direction)</label>
           <textarea id="classStyle" name="preferred_class_style" placeholder="예: 아이 성향에 맞춰 칭찬 중심으로 진행, 발음 교정과 말하기 자신감 향상 위주 (e.g., encouragement-focused, pronunciation correction, speaking confidence)" required></textarea>
         </div>
         <button type="submit">상담 신청 (Apply for Consultation)</button>
