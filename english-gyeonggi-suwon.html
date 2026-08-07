@@ -40,6 +40,10 @@ header{padding:18px 0;border-bottom:1px solid var(--line)}
 .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:999px;font-weight:800}
 .btn.primary{background:linear-gradient(95deg,var(--a),var(--b));color:#fff}
 .btn.ghost{border:1px solid var(--line);color:#2f3f61;background:#fff}
+.photo-strip{padding:8px 0 28px}
+.photo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.photo-grid img{width:100%;height:180px;object-fit:cover;border-radius:12px;border:1px solid var(--line);background:#fff}
+@media (max-width:840px){.photo-grid{grid-template-columns:1fr}.photo-grid img{height:200px}}
 footer{padding:24px 0 44px;color:#7a829a;font-size:13px}
 @media (max-width:840px){.cards{grid-template-columns:1fr}.hero p{font-size:15px}}
 </style>
@@ -64,6 +68,15 @@ footer{padding:24px 0 44px;color:#7a829a;font-size:13px}
   <div class="wrap">
     <h1>경기 수원시 영어회화</h1>
     <p>경기 수원시 지역 학습자에게 맞춘 1:1 화상회화 상담 페이지입니다. 현재 레벨과 목표를 확인한 뒤, 수업 시간대와 학습 목적에 맞는 커리큘럼을 제안합니다.</p>
+  </div>
+</section>
+<section class="photo-strip">
+  <div class="wrap">
+    <div class="photo-grid">
+      <img src="https://www.plcenter.co.kr/img/carousel-2.jpg" alt="파워잉글리쉬 1:1 화상수업 장면" loading="lazy" decoding="async">
+      <img src="https://www.plcenter.co.kr/img/carousel-1.jpg" alt="파워잉글리쉬 실전 회화 수업 장면" loading="lazy" decoding="async">
+      <img src="https://www.plcenter.co.kr/img/about.jpg" alt="파워잉글리쉬 강사진 수업 안내 이미지" loading="lazy" decoding="async">
+    </div>
   </div>
 </section>
 <section>
@@ -91,3 +104,5 @@ footer{padding:24px 0 44px;color:#7a829a;font-size:13px}
 </footer>
 </body>
 </html>
+
+
