@@ -1,4 +1,5 @@
 from pathlib import Path
+import json
 import re
 
 
@@ -64,16 +65,77 @@ CTA_RE = re.compile(r'<section class="cta">\s*<div class="wrap">\s*<div class="c
 MOBILE_MEDIA_RE = re.compile(r'@media \(max-width:840px\)\{\.cards\{grid-template-columns:1fr\}\.hero p\{font-size:15px\}\}')
 
 
+def build_faq_section(prefix: str, path: Path) -> str:
+    stem = path.stem
+    parts = stem.split("-")
+    parent_name = f"japanese-{parts[1]}.html" if len(parts) > 1 else "japanese.html"
+    return '<section class="detail faq-section" style="padding-top:8px">\n' \
+        '  <div class="wrap">\n' \
+        f'    <h2 style="margin:0 0 14px;font-size:24px;">{prefix} 일본어회화 자주 묻는 질문</h2>\n' \
+        '    <div style="display:grid;gap:12px">\n' \
+        '      <article style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px">\n' \
+        '        <h3 style="margin:0 0 8px;font-size:18px;">초보자도 수업을 시작할 수 있나요?</h3>\n' \
+        f'        <p style="margin:0;color:var(--muted);line-height:1.7">네. 왕초보부터 직장인까지 수준별로 발음, 문장 구성, 복습량을 조절해 {prefix} 일본어회화 수업을 맞춤 설계합니다.</p>\n' \
+        '      </article>\n' \
+        '      <article style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px">\n' \
+        '        <h3 style="margin:0 0 8px;font-size:18px;">여행회화와 비즈니스회화 중 무엇을 먼저 준비해야 하나요?</h3>\n' \
+        '        <p style="margin:0;color:var(--muted);line-height:1.7">여행회화는 상황별 패턴 훈련이, 비즈니스회화는 업무 표현과 말하기 속도 조절이 중요합니다.</p>\n' \
+        '      </article>\n' \
+        '      <article style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px">\n' \
+        '        <h3 style="margin:0 0 8px;font-size:18px;">무료 레벨테스트는 꼭 받아야 하나요?</h3>\n' \
+        f'        <p style="margin:0;color:var(--muted);line-height:1.7">무료 레벨테스트를 받으면 현재 수준과 목표를 바탕으로 {prefix} 일본어회화 수업 방향을 더 정확히 설정할 수 있습니다.</p>\n' \
+        '      </article>\n' \
+        '    </div>\n' \
+        '  </div>\n' \
+        '</section>\n' \
+        '<section class="detail" style="padding-top:4px">\n' \
+        '  <div class="wrap">\n' \
+        '    <h2 style="margin:0 0 14px;font-size:24px;">관련 페이지 바로가기</h2>\n' \
+        '    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">\n' \
+        f'      <a style="display:block;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:#fff;color:var(--ink);font-weight:700" href="{parent_name}">{prefix} 관련 지역 페이지</a>\n' \
+        '      <a style="display:block;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:#fff;color:var(--ink);font-weight:700" href="japanese.html">일본어회화 전체 지역 보기</a>\n' \
+        '      <a style="display:block;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:#fff;color:var(--ink);font-weight:700" href="index.html#apply">무료 레벨테스트 신청</a>\n' \
+        '    </div>\n' \
+        '  </div>\n' \
+        '</section>'
+
+
+def build_structured_data(path: Path, prefix: str, description: str) -> str:
+    payload = {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": f"{prefix} 일본어회화 1:1 화상 스피킹 수업",
+        "url": f"https://englishclass.kr/{path.name}",
+        "description": description,
+        "inLanguage": "ko-KR",
+        "publisher": {"@type": "Organization", "name": "파워잉글리쉬", "url": "https://englishclass.kr/"},
+        "mainEntity": {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "초보자도 수업을 시작할 수 있나요?",
+                    "acceptedAnswer": {"@type": "Answer", "text": f"네. 왕초보부터 직장인까지 수준별로 발음, 문장 구성, 복습량을 조절해 {prefix} 일본어회화 수업을 맞춤 설계합니다."},
+                },
+                {
+                    "@type": "Question",
+                    "name": "여행회화와 비즈니스회화 중 무엇을 먼저 준비해야 하나요?",
+                    "acceptedAnswer": {"@type": "Answer", "text": "여행회화는 상황별 패턴 훈련이, 비즈니스회화는 업무 표현과 말하기 속도 조절이 중요합니다."},
+                },
+            ],
+        },
+    }
+    return '<script type="application/ld+json">' + json.dumps(payload, ensure_ascii=False) + '</script>'
+
+
 def update_file(path: Path) -> bool:
     text = path.read_text(encoding="utf-8")
-    if "detail-grid" in text or "tag-list" in text:
-        return False
-
     match = TITLE_RE.search(text)
     if not match:
         return False
 
     prefix = match.group("prefix")
+    description = f"{prefix} 일본어회화, 일본어 스피킹, 발음 교정, 여행회화까지 1:1 화상 수업으로 맞춤 상담을 제공합니다."
 
     text = TITLE_RE.sub(
         rf'<title>{prefix} 일본어회화 1:1 화상 스피킹 수업 | 무료 레벨테스트 | 파워잉글리쉬</title>',
@@ -81,7 +143,7 @@ def update_file(path: Path) -> bool:
         count=1,
     )
     text = DESCRIPTION_RE.sub(
-        rf'<meta name="description" content="{prefix} 일본어회화, 일본어 스피킹, 발음 교정, 여행회화까지 1:1 화상 수업으로 맞춤 상담을 제공합니다.">',
+        rf'<meta name="description" content="{description}">',
         text,
         count=1,
     )
@@ -107,7 +169,11 @@ def update_file(path: Path) -> bool:
         '</section>\n' + DETAIL_TEMPLATE.format(prefix=prefix) + '\n<section class="cta">',
         1,
     )
-
+    if 'faq-section' not in text:
+        text = text.replace('<section class="cta">', build_faq_section(prefix, path) + '\n<section class="cta">', 1)
+    text = text.replace('<img src="[복사본] 파워잉글리시.jpg"', f'<img src="[복사본] 파워잉글리시.jpg" alt="{prefix} 일본어회화 수업 안내 이미지"', 1)
+    if 'application/ld+json' not in text:
+        text = text.replace('</head>', build_structured_data(path, prefix, description) + '\n</head>', 1)
     text = CTA_RE.sub(
         rf'<section class="cta">\n  <div class="wrap">\n    <div class="cta-box">\n      <p>{prefix} 일본어회화 상담은 무료 레벨테스트 신청으로 바로 시작할 수 있습니다. 일본어 스피킹, 발음 교정, 여행회화, 성인 맞춤 수업까지 목적에 맞게 안내합니다.</p>',
         text,
