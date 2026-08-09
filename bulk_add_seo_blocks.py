@@ -1,4 +1,5 @@
 from pathlib import Path
+import json
 import re
 
 ROOT = Path(r"c:\Users\M\Desktop\회화")
@@ -73,7 +74,41 @@ for path in sorted(ROOT.glob("*.html")):
     </div>
   </div>
 </section>'''
-        schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebPage","name":"{schema_name}","url":"https://englishclass.kr/{path.name}","description":"{title_prefix} 중국어회화, 중국어 스피킹, 발음 교정, 여행회화까지 1:1 화상 수업으로 맞춤 상담을 제공합니다.","inLanguage":"ko-KR","publisher":{"@type":"Organization","name":"파워잉글리쉬","url":"https://englishclass.kr/"},"mainEntity":{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"초보자도 수업을 시작할 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"네. 왕초보부터 직장인까지 수준별로 발화량과 복습량을 조절해 {title_prefix} 중국어회화 수업을 맞춤 설계합니다."}},{"@type":"Question","name":"여행회화와 실무회화 중 무엇을 먼저 준비해야 하나요?","acceptedAnswer":{"@type":"Answer","text":"목표에 따라 다르지만, 여행회화는 상황별 패턴 훈련, 실무회화는 업무 표현과 말하기 속도 조절이 핵심입니다."}}]}}}</script>'
+        schema_payload = {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": schema_name,
+            "url": f"https://englishclass.kr/{path.name}",
+            "description": f"{title_prefix} 중국어회화, 중국어 스피킹, 발음 교정, 여행회화까지 1:1 화상 수업으로 맞춤 상담을 제공합니다.",
+            "inLanguage": "ko-KR",
+            "publisher": {
+                "@type": "Organization",
+                "name": "파워잉글리쉬",
+                "url": "https://englishclass.kr/",
+            },
+            "mainEntity": {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "초보자도 수업을 시작할 수 있나요?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": f"네. 왕초보부터 직장인까지 수준별로 발화량과 복습량을 조절해 {title_prefix} 중국어회화 수업을 맞춤 설계합니다.",
+                        },
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "여행회화와 실무회화 중 무엇을 먼저 준비해야 하나요?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "목표에 따라 다르지만, 여행회화는 상황별 패턴 훈련, 실무회화는 업무 표현과 말하기 속도 조절이 핵심입니다.",
+                        },
+                    },
+                ],
+            },
+        }
+        schema = '<script type="application/ld+json">' + json.dumps(schema_payload, ensure_ascii=False) + '</script>'
     else:
         region = path.name.replace("japanese-", "").replace(".html", "")
         title_prefix = region.replace('-', ' ')
@@ -138,7 +173,41 @@ for path in sorted(ROOT.glob("*.html")):
     </div>
   </div>
 </section>'''
-        schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebPage","name":"{schema_name}","url":"https://englishclass.kr/{path.name}","description":"{title_prefix} 일본어회화, 일본어 스피킹, 발음 교정, 여행회화까지 1:1 화상 수업으로 맞춤 상담을 제공합니다.","inLanguage":"ko-KR","publisher":{"@type":"Organization","name":"파워잉글리쉬","url":"https://englishclass.kr/"},"mainEntity":{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"초보자도 수업을 시작할 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"네. 왕초보부터 직장인까지 수준별로 발음, 문장 구성, 복습량을 조절해 {title_prefix} 일본어회화 수업을 맞춤 설계합니다."}},{"@type":"Question","name":"여행회화와 비즈니스회화 중 무엇을 먼저 준비해야 하나요?","acceptedAnswer":{"@type":"Answer","text":"여행회화는 상황별 패턴 훈련이, 비즈니스회화는 업무 표현과 말하기 속도 조절이 중요합니다."}}]}}}</script>'
+        schema_payload = {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": schema_name,
+            "url": f"https://englishclass.kr/{path.name}",
+            "description": f"{title_prefix} 일본어회화, 일본어 스피킹, 발음 교정, 여행회화까지 1:1 화상 수업으로 맞춤 상담을 제공합니다.",
+            "inLanguage": "ko-KR",
+            "publisher": {
+                "@type": "Organization",
+                "name": "파워잉글리쉬",
+                "url": "https://englishclass.kr/",
+            },
+            "mainEntity": {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "초보자도 수업을 시작할 수 있나요?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": f"네. 왕초보부터 직장인까지 수준별로 발음, 문장 구성, 복습량을 조절해 {title_prefix} 일본어회화 수업을 맞춤 설계합니다.",
+                        },
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "여행회화와 비즈니스회화 중 무엇을 먼저 준비해야 하나요?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "여행회화는 상황별 패턴 훈련이, 비즈니스회화는 업무 표현과 말하기 속도 조절이 중요합니다.",
+                        },
+                    },
+                ],
+            },
+        }
+        schema = '<script type="application/ld+json">' + json.dumps(schema_payload, ensure_ascii=False) + '</script>'
 
     if '<section class="cta">' in text and 'faq-section' not in text:
         text = text.replace('<section class="cta">', faq_html + '\n<section class="cta">', 1)
