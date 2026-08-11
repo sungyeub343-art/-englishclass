@@ -141,6 +141,10 @@ def update(path: Path) -> bool:
         text = FAQ_BLOCK_RE.sub(faq_new, text, count=1)
     elif '<section class="cta">' in text:
         text = text.replace('<section class="cta">', faq_new + '\n<section class="cta">', 1)
+    elif '</main>' in text:
+      text = text.replace('</main>', '\n' + faq_new + '\n</main>', 1)
+    elif '</body>' in text:
+      text = text.replace('</body>', faq_new + '\n</body>', 1)
 
     schema_new = build_schema(prefix, lang, path, description)
     if SCHEMA_RE.search(text):
