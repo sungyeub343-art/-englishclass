@@ -148,9 +148,11 @@ def apply(path: Path) -> bool:
     return True
 
 
-for pattern in ("chinese-*-*.html", "japanese-*-*.html"):
+for pattern in ("chinese-*.html", "japanese-*.html"):
     updated = 0
-    for path in ROOT.glob(pattern):
+    for path in sorted(ROOT.glob(pattern)):
+        if path.name in {"chinese.html", "japanese.html"}:
+            continue
         if apply(path):
             updated += 1
     print(pattern, updated)

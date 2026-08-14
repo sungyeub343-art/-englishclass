@@ -177,7 +177,9 @@ def update_file(path: Path) -> bool:
 def main() -> None:
     updated = 0
     skipped = 0
-    for path in ROOT.glob("chinese-*-*.html"):
+    for path in sorted(ROOT.glob("chinese-*.html")):
+        if path.name == "chinese.html":
+            continue
         if update_file(path):
             updated += 1
         else:

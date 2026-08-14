@@ -193,7 +193,9 @@ def update_file(path: Path) -> bool:
 def main() -> None:
     updated = 0
     skipped = 0
-    for path in ROOT.glob("japanese-*-*.html"):
+    for path in sorted(ROOT.glob("japanese-*.html")):
+        if path.name == "japanese.html":
+            continue
         if update_file(path):
             updated += 1
         else:
