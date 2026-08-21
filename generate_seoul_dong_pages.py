@@ -1,6 +1,5 @@
 from pathlib import Path
 import re
-import unicodedata
 
 
 ROOT = Path(__file__).parent
@@ -33,14 +32,6 @@ DISTRICTS = {
     "gangdong": ("강동구", ["강일동", "상일제1동", "상일제2동", "명일제1동", "명일제2동", "고덕제1동", "고덕제2동", "암사제1동", "암사제2동", "암사제3동", "천호제1동", "천호제2동", "천호제3동", "성내제1동", "성내제2동", "성내제3동", "길동", "둔촌제1동", "둔촌제2동"]),
 }
 
-def slugify(value):
-    value = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode().lower()
-    value = re.sub(r"[^a-z0-9]+", "-", value).strip("-")
-    return value
-
-    return value
-
-
 def make_slug(dong, index):
     known = {
         "청운효자동": "cheongunhyoja", "사직동": "sajik", "삼청동": "samcheong", "부암동": "buam",
@@ -49,7 +40,7 @@ def make_slug(dong, index):
         "혜화동": "hyehwa", "창신제1동": "changsin-1", "창신제2동": "changsin-2", "창신제3동": "changsin-3",
         "숭인제1동": "sungin-1", "숭인제2동": "sungin-2",
     }
-    return known.get(dong, f"dong-{index}")
+    return known.get(dong, str(index))
 
 
 def child_template():
@@ -59,11 +50,13 @@ def child_template():
 def update_parent(district_slug, district_name, dongs):
     path = ROOT / f"english-seoul-{district_slug}.html"
     text = path.read_text(encoding="utf-8")
+    css = ".subdistricts{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}.subdistricts h2{margin:0 0 12px;font-size:19px}.subdistrict-links{display:flex;flex-wrap:wrap;gap:8px}.subdistrict-links a{padding:9px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;color:#2f3f61;font-size:13px;font-weight:700}"
     if "subdistricts" not in text:
-        css = ".subdistricts{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}.subdistricts h2{margin:0 0 12px;font-size:19px}.subdistrict-links{display:flex;flex-wrap:wrap;gap:8px}.subdistrict-links a{padding:9px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;color:#2f3f61;font-size:13px;font-weight:700}"
         text = text.replace(".photo-strip{", css + ".photo-strip{", 1)
-        links = "\n".join(f'          <a href="english-seoul-{district_slug}-{make_slug(dong, i)}.html">{dong}</a>' for i, dong in enumerate(dongs, 1))
-        block = f'''      <div class="subdistricts">\n        <h2>서울 {district_name} 동별 영어회화</h2>\n        <div class="subdistrict-links">\n{links}\n        </div>\n      </div>\n'''
+    links = "\n".join(f'          <a href="english-seoul-{district_slug}-{make_slug(dong, i)}.html">{dong}</a>' for i, dong in enumerate(dongs, 1))
+    block = f'''      <div class="subdistricts">\n        <h2>서울 {district_name} 동별 영어회화</h2>\n        <div class="subdistrict-links">\n{links}\n        </div>\n      </div>\n'''
+    text = re.sub(r'      <div class="subdistricts">.*?      </div>\n', block, text, count=1, flags=re.S)
+    if "subdistricts" not in text:
         marker = "    </div>\n  </div>\n</section>\n</main>"
         text = text.replace(marker, "    </div>\n" + block + "  </div>\n</section>\n</main>", 1)
     path.write_text(text, encoding="utf-8", newline="\n")
