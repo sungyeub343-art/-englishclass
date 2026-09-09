@@ -1,5 +1,7 @@
+from datetime import date
 from pathlib import Path
 import re
+import xml.etree.ElementTree as ET
 
 
 ROOT = Path(__file__).parent
@@ -32,6 +34,10 @@ DISTRICTS = {
     "gangdong": ("강동구", ["강일동", "상일제1동", "상일제2동", "명일제1동", "명일제2동", "고덕제1동", "고덕제2동", "암사제1동", "암사제2동", "암사제3동", "천호제1동", "천호제2동", "천호제3동", "성내제1동", "성내제2동", "성내제3동", "길동", "둔촌제1동", "둔촌제2동"]),
 }
 
+EXPECTED_PAGE_COUNT = 424
+
+CSS = ".subdistricts{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}.subdistricts h2{margin:0 0 12px;font-size:19px}.subdistrict-links{display:flex;flex-wrap:wrap;gap:8px}.subdistrict-links a{padding:9px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;color:#2f3f61;font-size:13px;font-weight:700}"
+
 def make_slug(dong, index):
     known = {
         "청운효자동": "cheongunhyoja", "사직동": "sajik", "삼청동": "samcheong", "부암동": "buam",
@@ -47,24 +53,118 @@ def child_template():
     return (ROOT / "english-seoul-jongno-cheongunhyoja.html").read_text(encoding="utf-8")
 
 
+def remove_subdistricts(text):
+    return re.sub(
+        r'\s*<div class="subdistricts">\s*<h2>.*?</h2>\s*<div class="subdistrict-links">.*?</div>\s*</div>',
+        "",
+        text,
+        count=1,
+        flags=re.S,
+    )
+
+
 def update_parent(district_slug, district_name, dongs):
     path = ROOT / f"english-seoul-{district_slug}.html"
     text = path.read_text(encoding="utf-8")
-    css = ".subdistricts{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}.subdistricts h2{margin:0 0 12px;font-size:19px}.subdistrict-links{display:flex;flex-wrap:wrap;gap:8px}.subdistrict-links a{padding:9px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;color:#2f3f61;font-size:13px;font-weight:700}"
-    if "subdistricts" not in text:
-        text = text.replace(".photo-strip{", css + ".photo-strip{", 1)
-    links = "\n".join(f'          <a href="english-seoul-{district_slug}-{make_slug(dong, i)}.html">{dong}</a>' for i, dong in enumerate(dongs, 1))
-    block = f'''      <div class="subdistricts">\n        <h2>서울 {district_name} 동별 영어회화</h2>\n        <div class="subdistrict-links">\n{links}\n        </div>\n      </div>\n'''
-    text = re.sub(r'      <div class="subdistricts">.*?      </div>\n', block, text, count=1, flags=re.S)
-    if "subdistricts" not in text:
-        marker = "    </div>\n  </div>\n</section>\n</main>"
-        text = text.replace(marker, "    </div>\n" + block + "  </div>\n</section>\n</main>", 1)
+    if ".subdistricts{" not in text:
+        text = text.replace(".photo-strip{", CSS + ".photo-strip{", 1)
+    text = remove_subdistricts(text)
+    text = text.replace("    </div>\n  </div>\n  </div>\n</section>\n</main>", "    </div>\n  </div>\n</section>\n</main>", 1)
+
+    links = "\n".join(
+        f'        <a href="english-seoul-{district_slug}-{make_slug(dong, index)}.html">{dong}</a>'
+        for index, dong in enumerate(dongs, 1)
+    )
+    block = f'''    <div class="subdistricts">
+      <h2>서울 {district_name} 동별 영어회화</h2>
+      <div class="subdistrict-links">
+{links}
+      </div>
+    </div>
+'''
+    marker = "    </div>\n  </div>\n</section>\n</main>"
+    if marker not in text:
+        raise ValueError(f"CTA marker not found in {path.name}")
+    text = text.replace(marker, "    </div>\n" + block + "  </div>\n</section>\n</main>", 1)
     path.write_text(text, encoding="utf-8", newline="\n")
+
+
+def create_child(base, district_slug, district_name, dong, filename):
+    parent_filename = f"english-seoul-{district_slug}.html"
+    label = f"서울 {district_name} {dong}"
+    text = base.replace("서울 종로구 청운효자동", label)
+    text = text.replace(">종로구<", f">{district_name}<")
+    text = text.replace("청운효자동", dong)
+    text = text.replace("종로구 전체 동 보기", f"{district_name} 전체 동 보기")
+    text = text.replace("english-seoul-jongno.html", parent_filename)
+    text = text.replace("english-seoul-jongno-cheongunhyoja.html", filename)
+    return text
+
+
+def update_sitemap(filenames):
+    path = ROOT / "sitemap.xml"
+    text = path.read_text(encoding="utf-8")
+    text = re.sub(
+        r'\s*<url>\s*<loc>https://englishclass\.kr/english-seoul-[^<]+-[^<]+\.html</loc>.*?</url>',
+        "",
+        text,
+        flags=re.S,
+    )
+    today = date.today().isoformat()
+    entries = "\n".join(
+        f'''  <url>
+    <loc>https://englishclass.kr/{filename}</loc>
+    <lastmod>{today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>'''
+        for filename in filenames
+    )
+    text = text.replace("</urlset>", entries + "\n</urlset>", 1)
+    path.write_text(text, encoding="utf-8", newline="\n")
+
+
+def validate_output(filenames):
+    if len(filenames) != EXPECTED_PAGE_COUNT:
+        raise ValueError(f"Expected {EXPECTED_PAGE_COUNT} child pages, got {len(filenames)}")
+
+    expected_urls = {f"https://englishclass.kr/{filename}" for filename in filenames}
+    canonical_urls = set()
+    for filename in filenames:
+        text = (ROOT / filename).read_text(encoding="utf-8")
+        expected_url = f"https://englishclass.kr/{filename}"
+        canonical = re.search(r'<link rel="canonical" href="([^"]+)">', text)
+        og_url = re.search(r'<meta property="og:url" content="([^"]+)">', text)
+        if not canonical or canonical.group(1) != expected_url:
+            raise ValueError(f"Invalid canonical URL in {filename}")
+        if not og_url or og_url.group(1) != expected_url:
+            raise ValueError(f"Invalid OG URL in {filename}")
+        if filename != "english-seoul-jongno-cheongunhyoja.html" and "청운효자동" in text:
+            raise ValueError(f"Template locality remains in {filename}")
+        canonical_urls.add(canonical.group(1))
+
+    if canonical_urls != expected_urls:
+        raise ValueError("Duplicate or missing child canonical URLs")
+
+    for slug, (_, dongs) in DISTRICTS.items():
+        parent = ROOT / f"english-seoul-{slug}.html"
+        text = parent.read_text(encoding="utf-8")
+        links = re.findall(rf'<a href="(english-seoul-{re.escape(slug)}-[^"]+\.html)">', text)
+        if len(links) != len(dongs) or len(links) != len(set(links)):
+            raise ValueError(f"Invalid child links in {parent.name}")
+        if not all((ROOT / link).exists() for link in links):
+            raise ValueError(f"Broken child link in {parent.name}")
+
+    sitemap = ET.parse(ROOT / "sitemap.xml")
+    namespace = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
+    sitemap_urls = [node.text for node in sitemap.findall(f".//{namespace}loc")]
+    if sum(url in expected_urls for url in sitemap_urls) != len(expected_urls):
+        raise ValueError("Missing or duplicate Seoul child sitemap entries")
 
 
 def main():
     base = child_template()
-    generated = 0
+    generated_files = []
     for district_slug, (district_name, dongs) in DISTRICTS.items():
         update_parent(district_slug, district_name, dongs)
         expected = {
@@ -78,14 +178,16 @@ def main():
         for index, dong in enumerate(dongs, 1):
             slug = make_slug(dong, index)
             filename = f"english-seoul-{district_slug}-{slug}.html"
-            text = base.replace("서울 종로구 청운효자동", f"서울 {district_name} {dong}")
-            text = text.replace("종로구 전체 동 보기", f"{district_name} 전체 동 보기")
-            text = text.replace("english-seoul-jongno.html", f"english-seoul-{district_slug}.html")
-            text = text.replace("english-seoul-jongno-cheongunhyoja.html", filename)
-            text = text.replace("english-seoul-jongno-", f"english-seoul-{district_slug}-")
+            text = create_child(base, district_slug, district_name, dong, filename)
             (ROOT / filename).write_text(text, encoding="utf-8", newline="\n")
-            generated += 1
-    print(f"Generated {generated} Seoul dong pages")
+            generated_files.append(filename)
+
+    update_sitemap(generated_files)
+    validate_output(generated_files)
+    print(f"Updated {len(DISTRICTS)} Seoul parent pages")
+    print(f"Generated {len(generated_files)} Seoul dong pages")
+    print(f"Added {len(generated_files)} pages to sitemap.xml")
+    print("Validated child metadata, parent links, and sitemap entries")
 
 
 if __name__ == "__main__":
