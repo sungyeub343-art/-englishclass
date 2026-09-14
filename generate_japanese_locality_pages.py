@@ -8,31 +8,33 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).parent
 SITE_URL = "https://englishclass.kr"
 EXPECTED_PARENT_COUNT = 229
+LANGUAGE = "japanese"
+LANGUAGE_LABEL = "일본어"
 
 CSS = ".subdistricts{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}.subdistricts h2{margin:0 0 12px;font-size:19px}.subdistrict-links{display:flex;flex-wrap:wrap;gap:8px}.subdistrict-links a{padding:9px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;color:#2f3f61;font-size:13px;font-weight:700}"
 CTA_MARKER = "    </div>\n  </div>\n</section>\n</main>"
 
 
 def parent_pages() -> list[Path]:
-    language_index = (ROOT / "japanese.html").read_text(encoding="utf-8")
+    language_index = (ROOT / f"{LANGUAGE}.html").read_text(encoding="utf-8")
     region_filenames = re.findall(
-        r"class='region-card' href='(japanese-[^']+\.html)'",
+        rf"class='region-card' href='({LANGUAGE}-[^']+\.html)'",
         language_index,
     )
     parent_filenames = []
     for region_filename in region_filenames:
         region_text = (ROOT / region_filename).read_text(encoding="utf-8")
         parent_filenames.extend(
-            re.findall(r"class='chip' href='(japanese-[^']+\.html)'", region_text)
+            re.findall(rf"class='chip' href='({LANGUAGE}-[^']+\.html)'", region_text)
         )
     pages = sorted(ROOT / filename for filename in parent_filenames)
     if len(pages) != EXPECTED_PARENT_COUNT:
-        raise ValueError(f"Expected {EXPECTED_PARENT_COUNT} Japanese parent pages, got {len(pages)}")
+        raise ValueError(f"Expected {EXPECTED_PARENT_COUNT} {LANGUAGE} parent pages, got {len(pages)}")
     return pages
 
 
 def page_details(path: Path) -> tuple[str, str, str]:
-    match = re.fullmatch(r"japanese-([^-]+)-(.+)\.html", path.name)
+    match = re.fullmatch(rf"{LANGUAGE}-([^-]+)-(.+)\.html", path.name)
     if not match:
         raise ValueError(f"Unexpected parent filename: {path.name}")
     region, district_slug = match.groups()
@@ -47,7 +49,7 @@ def page_details(path: Path) -> tuple[str, str, str]:
 def locality_map() -> dict[Path, list[tuple[str, str]]]:
     mapping = {}
     for parent in parent_pages():
-        english_parent = ROOT / parent.name.replace("japanese-", "english-", 1)
+        english_parent = ROOT / parent.name.replace(f"{LANGUAGE}-", "english-", 1)
         if not english_parent.exists():
             raise ValueError(f"English locality source not found for {parent.name}")
         english_text = english_parent.read_text(encoding="utf-8")
@@ -84,14 +86,14 @@ def update_parent(path: Path, localities: list[tuple[str, str]]) -> str:
         text = text.replace(".photo-strip{", CSS + ".photo-strip{", 1)
 
     links = "\n".join(
-        f'        <a href="japanese-{region}-{district_slug}-{suffix}.html">{locality}</a>'
+        f'        <a href="{LANGUAGE}-{region}-{district_slug}-{suffix}.html">{locality}</a>'
         for suffix, locality in localities
     )
-    heading = re.search(r"<h1>(.*?) 일본어회화</h1>", source)
+    heading = re.search(rf"<h1>(.*?) {LANGUAGE_LABEL}회화</h1>", source)
     if not heading:
         raise ValueError(f"Parent heading not found in {path.name}")
     block = f'''    <div class="subdistricts">
-      <h2>{heading.group(1)} 읍면동 일본어회화</h2>
+            <h2>{heading.group(1)} 읍면동 {LANGUAGE_LABEL}회화</h2>
       <div class="subdistrict-links">
 {links}
       </div>
@@ -116,8 +118,8 @@ def child_from_parent(
     locality: str,
     filename: str,
 ) -> str:
-    parent_filename = f"japanese-{region}-{district_slug}.html"
-    heading = re.search(r"<h1>(.*?) 일본어회화</h1>", source)
+    parent_filename = f"{LANGUAGE}-{region}-{district_slug}.html"
+    heading = re.search(rf"<h1>(.*?) {LANGUAGE_LABEL}회화</h1>", source)
     if not heading:
         raise ValueError(f"Parent heading not found for {filename}")
     parent_label = heading.group(1)
@@ -133,7 +135,7 @@ def child_from_parent(
         1,
     )
     text = re.sub(
-        r'<a class="btn ghost" href="japanese-[^"]+\.html">[^<]+ 시·군·구 전체 보기</a>',
+        rf'<a class="btn ghost" href="{LANGUAGE}-[^"]+\.html">[^<]+ 시·군·구 전체 보기</a>',
         f'<a class="btn ghost" href="{parent_filename}">{district_name} 전체 읍면동 보기</a>',
         text,
         count=1,
@@ -170,7 +172,7 @@ def expected_filenames(mapping: dict[Path, list[tuple[str, str]]]) -> list[str]:
     for parent, localities in mapping.items():
         region, district_slug, _ = page_details(parent)
         filenames.extend(
-            f"japanese-{region}-{district_slug}-{suffix}.html"
+            f"{LANGUAGE}-{region}-{district_slug}-{suffix}.html"
             for suffix, _ in localities
         )
     return filenames
@@ -191,8 +193,8 @@ def validate_output(mapping: dict[Path, list[tuple[str, str]]], filenames: list[
             raise ValueError(f"Invalid OG URL in {filename}")
         if '<div class="subdistricts">' in text or "전체 읍면동 보기</a>" not in text:
             raise ValueError(f"Invalid child navigation in {filename}")
-        if "일본어회화" not in text or "japanese.html" not in text:
-            raise ValueError(f"Invalid Japanese content in {filename}")
+        if f"{LANGUAGE_LABEL}회화" not in text or f"{LANGUAGE}.html" not in text:
+            raise ValueError(f"Invalid {LANGUAGE} content in {filename}")
         canonical_urls.add(canonical.group(1))
     if canonical_urls != expected_urls:
         raise ValueError("Duplicate or missing child canonical URLs")
@@ -200,7 +202,7 @@ def validate_output(mapping: dict[Path, list[tuple[str, str]]], filenames: list[
     for parent, localities in mapping.items():
         region, district_slug, _ = page_details(parent)
         text = parent.read_text(encoding="utf-8")
-        pattern = rf'<a href="(japanese-{region}-{re.escape(district_slug)}-[^"]+\.html)">'
+        pattern = rf'<a href="({LANGUAGE}-{region}-{re.escape(district_slug)}-[^"]+\.html)">'
         links = re.findall(pattern, text)
         if len(links) != len(localities) or len(links) != len(set(links)):
             raise ValueError(f"Invalid child links in {parent.name}")
@@ -218,17 +220,21 @@ def validate_output(mapping: dict[Path, list[tuple[str, str]]], filenames: list[
         raise ValueError("Missing, duplicate, or orphaned child sitemap entries")
 
 
-def main() -> None:
+def main(default_language: str = "japanese") -> None:
+    global LANGUAGE, LANGUAGE_LABEL
     parser = ArgumentParser()
+    parser.add_argument("--language", choices=("japanese", "chinese"), default=default_language)
     parser.add_argument("--check", action="store_true", help="Validate source matching without writing files")
     parser.add_argument("--validate", action="store_true", help="Validate generated pages without writing files")
     args = parser.parse_args()
+    LANGUAGE = args.language
+    LANGUAGE_LABEL = "일본어" if LANGUAGE == "japanese" else "중국어"
 
     mapping = locality_map()
     filenames = expected_filenames(mapping)
     if args.check:
         print(f"Matched {len(mapping)} parent pages to {len(filenames)} 읍면동")
-        sample = ROOT / "japanese-seoul-jongno.html"
+        sample = ROOT / f"{LANGUAGE}-seoul-jongno.html"
         print(f"Seoul Jongno-gu: {', '.join(locality for _, locality in mapping[sample])}")
         return
     if args.validate:
@@ -241,14 +247,14 @@ def main() -> None:
         region, district_slug, district_name = page_details(parent)
         source = update_parent(parent, localities)
         expected = {
-            f"japanese-{region}-{district_slug}-{suffix}.html"
+            f"{LANGUAGE}-{region}-{district_slug}-{suffix}.html"
             for suffix, _ in localities
         }
-        for old in ROOT.glob(f"japanese-{region}-{district_slug}-*.html"):
+        for old in ROOT.glob(f"{LANGUAGE}-{region}-{district_slug}-*.html"):
             if old.name not in expected:
                 old.unlink()
         for suffix, locality in localities:
-            filename = f"japanese-{region}-{district_slug}-{suffix}.html"
+            filename = f"{LANGUAGE}-{region}-{district_slug}-{suffix}.html"
             text = child_from_parent(
                 source,
                 region,
@@ -265,7 +271,7 @@ def main() -> None:
     print(f"Updated {len(mapping)} parent pages")
     print(f"Generated {len(generated_files)} 읍면동 pages")
     print(f"Added {len(generated_files)} pages to sitemap.xml")
-    print("Validated Japanese metadata, parent links, child navigation, and sitemap entries")
+    print(f"Validated {LANGUAGE_LABEL} metadata, parent links, child navigation, and sitemap entries")
 
 
 if __name__ == "__main__":
