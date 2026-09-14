@@ -38,6 +38,9 @@ header{position:sticky;top:0;background:rgba(245,244,239,.92);backdrop-filter:bl
 .badges li{padding:10px 14px;border:1px solid var(--line);border-radius:999px;background:#fff;font-weight:600;color:#30405d}
 .region{padding:18px 0 78px}
 .region h2{font-size:30px;margin:0 0 18px}
+.business-inquiry{display:flex;align-items:center;justify-content:space-between;gap:20px;margin:0 0 24px;padding:20px;border:1px solid var(--line);border-left:5px solid var(--a);border-radius:8px;background:#fff}
+.business-inquiry strong{display:block;font-size:19px}.business-inquiry span{display:block;margin-top:5px;color:var(--muted);line-height:1.6}
+.business-inquiry b{flex:0 0 auto;color:var(--a);font-size:14px}
 .region-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .region-card{display:block;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:16px;transition:.2s transform,.2s border-color,.2s box-shadow}
 .region-card strong{display:block;font-size:22px;color:var(--ink)}
@@ -47,7 +50,7 @@ header{position:sticky;top:0;background:rgba(245,244,239,.92);backdrop-filter:bl
 .cta a{display:inline-flex;align-items:center;justify-content:center;padding:14px 26px;border-radius:999px;background:linear-gradient(95deg,var(--a),var(--b));color:#fff;font-weight:800}
 footer{padding:36px 0 56px;color:#6e7891;font-size:14px}
 @media (max-width:920px){.region-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.hero p{font-size:16px}}
-@media (max-width:560px){.region-grid{grid-template-columns:1fr;}.hero{padding-top:64px}.logo{font-size:22px}}
+@media (max-width:560px){.region-grid{grid-template-columns:1fr;}.hero{padding-top:64px}.logo{font-size:22px}.business-inquiry{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
 <body>
@@ -72,6 +75,10 @@ footer{padding:36px 0 56px;color:#6e7891;font-size:14px}
 <section class="region">
   <div class="wrap">
     <h2>영어회화 지역별 페이지</h2>
+    <a class="business-inquiry" href="business-english-speaking-inquiry.html">
+      <span><strong>지역별(시군구) + 직장인 영어스피킹 문의</strong><span>전국 229개 시·군·구에서 직장인 맞춤 상담 페이지를 찾아보세요.</span></span>
+      <b>지역 선택하기 →</b>
+    </a>
     <div class="region-grid">
       <a class='region-card' href='english-seoul.html'><strong>서울</strong><span>서울 영어회화 1:1 무료상담</span></a>
       <a class='region-card' href='english-gyeonggi.html'><strong>경기</strong><span>경기 영어회화 1:1 무료상담</span></a>
