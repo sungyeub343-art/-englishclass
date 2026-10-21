@@ -474,6 +474,19 @@
 
   /* ---------- CTA band ---------- */
 
+  .cta-band{
+    background:var(--ink); border-radius:28px; padding:64px 56px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between; gap:40px; flex-wrap:wrap;
+  }
+  .cta-band h2{ color:#fff; font-size:clamp(24px,3vw,32px); max-width:480px; line-height:1.35; }
+  .cta-band p{ color:#B9C0D0; margin-top:10px; font-size:14.5px; }
+  .cta-phone{
+    display:inline-block; background:var(--coral); color:#fff; padding:16px 28px; border-radius:14px;
+    font-weight:700; font-size:clamp(20px,2.4vw,26px); letter-spacing:.02em; text-decoration:none;
+    transition:background .2s ease;
+  }
+  .cta-phone:hover{ background:var(--coral-deep); }
+
   /* ---------- Footer ---------- */
   footer{ padding:70px 0 40px; }
   .foot-grid{ display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:40px; padding-bottom:44px; border-bottom:1px solid var(--line); }
@@ -485,6 +498,7 @@
 
   /* ---------- Responsive ---------- */
   @media (max-width:960px){
+    .cta-band{ padding:44px 28px; }
     .navlinks{ display:none; }
     .nav-actions{ display:flex; align-items:center; gap:8px; }
     .mobile-menu-toggle{ display:inline-flex; }
@@ -849,6 +863,18 @@
         <h3>무료 레벨테스트 후 바로 수업을 시작할 수 있나요?</h3>
         <p>무료 레벨테스트와 상담 후 현재 실력, 희망 시간대, 목표를 확인하고 적합한 강사와 커리큘럼을 매칭해 수업 일정을 안내합니다.</p>
       </article>
+    </div>
+  </div>
+</section>
+
+<section class="pad line-top" id="apply">
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <div>
+        <h2>무료 레벨테스트로<br>지금 시작해보세요</h2>
+        <p>아래 연락처로 전화 또는 문자 주시면 담당 상담사가 안내드립니다.</p>
+      </div>
+      <a class="cta-phone" href="tel:010-2928-3614">010-2928-3614</a>
     </div>
   </div>
 </section>
